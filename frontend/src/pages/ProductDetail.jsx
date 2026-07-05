@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { useParams, Link, useNavigate } from 'react-router-dom';
-import { api } from '../utils/api';
+import { api, getImageUrl } from '../utils/api';
 import { CartContext } from '../context/CartContext';
 import { AuthContext } from '../context/AuthContext';
 import Alert from '../components/Alert';
@@ -187,7 +187,7 @@ const ProductDetail = () => {
                     style={{ overflow: 'hidden', cursor: 'zoom-in' }}
                 >
                     <img 
-                        src={product.image} 
+                        src={getImageUrl(product.image)} 
                         alt={product.name} 
                         className="detail-large-img" 
                         style={{ 
@@ -355,7 +355,7 @@ const ProductDetail = () => {
                                 )}
                                 <div className="product-image-container">
                                     <Link to={`/products/${p._id}`}>
-                                        <img src={p.image} alt={p.name} className="product-image" />
+                                        <img src={getImageUrl(p.image)} alt={p.name} className="product-image" />
                                     </Link>
                                 </div>
                                 <div className="product-info">

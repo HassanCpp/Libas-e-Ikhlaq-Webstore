@@ -2,6 +2,7 @@ import React, { useContext, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { CartContext } from '../context/CartContext';
 import Alert from '../components/Alert';
+import { getImageUrl } from '../utils/api';
 
 const Wishlist = () => {
     const { wishlistItems, removeFromWishlist, addToCart } = useContext(CartContext);
@@ -67,7 +68,7 @@ const Wishlist = () => {
                         
                         <div className="product-image-container">
                             <Link to={`/products/${product._id}`}>
-                                <img src={product.image} alt={product.name} className="product-image" />
+                                <img src={getImageUrl(product.image)} alt={product.name} className="product-image" />
                             </Link>
                         </div>
                         

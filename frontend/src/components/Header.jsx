@@ -2,7 +2,7 @@ import React, { useState, useEffect, useContext, useRef } from 'react';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { AuthContext } from '../context/AuthContext';
 import { CartContext } from '../context/CartContext';
-import { api } from '../utils/api';
+import { api, getImageUrl } from '../utils/api';
 
 const Header = () => {
     const { user, logout } = useContext(AuthContext);
@@ -127,7 +127,7 @@ const Header = () => {
                                         onClick={() => handleSuggestionClick(prod._id)}
                                         className="header-suggestion-item"
                                     >
-                                        <img src={prod.image} alt={prod.name} className="header-suggestion-img" />
+                                        <img src={getImageUrl(prod.image)} alt={prod.name} className="header-suggestion-img" />
                                         <div className="header-suggestion-info">
                                             <span className="header-suggestion-name">{prod.name}</span>
                                             <span className="header-suggestion-price">

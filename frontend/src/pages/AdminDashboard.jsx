@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { api } from '../utils/api';
+import { api, getImageUrl } from '../utils/api';
 import { AuthContext } from '../context/AuthContext';
 import AdminHeader from '../components/AdminHeader';
 import Alert from '../components/Alert';
@@ -196,7 +196,7 @@ const AdminDashboard = () => {
                                             <td className="admin-td">
                                                 <div style={{ display: 'flex', alignItems: 'center', gap: '15px' }}>
                                                     <img 
-                                                        src={prod.image} 
+                                                        src={getImageUrl(prod.image)} 
                                                         alt={prod.name} 
                                                         style={{ width: '45px', height: '55px', objectFit: 'cover', borderRadius: '4px', border: '1px solid #eee' }} 
                                                     />

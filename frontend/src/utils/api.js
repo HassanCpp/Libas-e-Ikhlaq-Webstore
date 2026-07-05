@@ -65,4 +65,14 @@ export const api = {
         return handleResponse(res);
     }
 };
-export { BASE_URL };
+
+const getImageUrl = (imagePath) => {
+    if (!imagePath) return '/sale.png';
+    if (imagePath.startsWith('http://') || imagePath.startsWith('https://') || imagePath.startsWith('data:')) {
+        return imagePath;
+    }
+    const host = BASE_URL.replace('/api/v1', '');
+    return `${host}${imagePath}`;
+};
+
+export { BASE_URL, getImageUrl };

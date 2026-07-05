@@ -2,6 +2,7 @@ import React, { useContext, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { CartContext } from '../context/CartContext';
 import Alert from '../components/Alert';
+import { getImageUrl } from '../utils/api';
 
 const Cart = () => {
     const { cartItems, subtotal, updateCartQty, removeFromCart } = useContext(CartContext);
@@ -71,7 +72,7 @@ const Cart = () => {
                                         <td className="cart-td">
                                             <div className="cart-item-meta">
                                                 <img 
-                                                    src={item.product.image} 
+                                                    src={getImageUrl(item.product.image)} 
                                                     alt={item.product.name} 
                                                     className="cart-item-img" 
                                                 />

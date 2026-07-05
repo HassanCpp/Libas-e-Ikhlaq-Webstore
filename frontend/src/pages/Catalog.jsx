@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { useLocation, useNavigate, Link } from 'react-router-dom';
-import { api } from '../utils/api';
+import { api, getImageUrl } from '../utils/api';
 import { CartContext } from '../context/CartContext';
 import Alert from '../components/Alert';
 
@@ -244,7 +244,7 @@ const Catalog = () => {
                                         )}
                                         <div className="product-image-container">
                                             <Link to={`/products/${product._id}`}>
-                                                <img src={product.image} alt={product.name} className="product-image" />
+                                                <img src={getImageUrl(product.image)} alt={product.name} className="product-image" />
                                             </Link>
                                         </div>
                                         <div className="product-info" style={{ paddingBottom: '10px' }}>

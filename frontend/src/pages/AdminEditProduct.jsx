@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate, useParams, Link } from 'react-router-dom';
-import { api } from '../utils/api';
+import { api, getImageUrl } from '../utils/api';
 import AdminHeader from '../components/AdminHeader';
 import Alert from '../components/Alert';
 
@@ -258,7 +258,7 @@ const AdminEditProduct = () => {
                             <h4 className="selector-title" style={{ marginBottom: '20px' }}>Active Cover Image</h4>
                             {existingImage && (
                                 <img 
-                                    src={existingImage} 
+                                    src={getImageUrl(existingImage)} 
                                     alt="Product Cover" 
                                     style={{ width: '100%', maxHeight: '350px', objectFit: 'cover', borderRadius: '4px', border: '1px solid #ddd' }} 
                                 />
