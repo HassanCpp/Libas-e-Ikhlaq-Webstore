@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
-import { api } from '../utils/api';
+import { api, BASE_URL } from '../utils/api';
 import Alert from '../components/Alert';
 
 const OrderDetail = () => {
@@ -43,7 +43,7 @@ const OrderDetail = () => {
             return;
         }
         // Open the download link directly with token in query params to bypass fetch and avoid IDM interception issues!
-        window.open(`/api/v1/orders/${id}/invoice?token=${token}`, '_blank');
+        window.open(`${BASE_URL}/orders/${id}/invoice?token=${token}`, '_blank');
         triggerAlert('success', 'PDF Invoice download initiated.');
     };
 
