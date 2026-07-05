@@ -68,52 +68,52 @@ const Cart = () => {
                                     : item.product.price;
                                 const itemTotal = activePrice * item.quantity;
                                 return (
-                                    <tr key={`${item.product._id}-${item.size || idx}`} className="cart-tr">
-                                        <td className="cart-td">
-                                            <div className="cart-item-meta">
-                                                <img 
-                                                    src={getImageUrl(item.product.image)} 
-                                                    alt={item.product.name} 
-                                                    className="cart-item-img" 
-                                                />
-                                                <div>
-                                                    <Link to={`/products/${item.product._id}`} className="cart-item-name">
-                                                        {item.product.name}
-                                                    </Link>
-                                                    {item.size && <div className="cart-item-size">Size: <strong>{item.size}</strong></div>}
-                                                    <button 
-                                                        onClick={() => handleRemoveClick(item.product._id, item.size)}
-                                                        className="cart-remove-btn"
-                                                    >
-                                                        <i className="fa-regular fa-trash-can"></i> Remove
-                                                    </button>
-                                                </div>
-                                            </div>
-                                        </td>
-                                        <td className="cart-td" style={{ fontWeight: '600' }}>
-                                            Rs. {activePrice.toLocaleString()}
-                                        </td>
-                                        <td className="cart-td">
-                                            <div className="qty-controls" style={{ margin: '0 auto', width: 'fit-content' }}>
-                                                <button 
-                                                    onClick={() => handleQtyChange(item.product._id, item.quantity, false, item.size)}
-                                                    className="qty-btn"
-                                                >
-                                                    -
-                                                </button>
-                                                <div className="qty-display">{item.quantity}</div>
-                                                <button 
-                                                    onClick={() => handleQtyChange(item.product._id, item.quantity, true, item.size)}
-                                                    className="qty-btn"
-                                                >
-                                                    +
-                                                </button>
-                                            </div>
-                                        </td>
-                                        <td className="cart-td" style={{ textAlign: 'right', fontWeight: '700', color: 'var(--brand-orange)' }}>
-                                            Rs. {itemTotal.toLocaleString()}
-                                        </td>
-                                    </tr>
+                                     <tr key={`${item.product._id}-${item.size || idx}`} className="cart-tr">
+                                         <td className="cart-td" data-label="Product">
+                                             <div className="cart-item-meta">
+                                                 <img 
+                                                     src={getImageUrl(item.product.image)} 
+                                                     alt={item.product.name} 
+                                                     className="cart-item-img" 
+                                                 />
+                                                 <div>
+                                                     <Link to={`/products/${item.product._id}`} className="cart-item-name">
+                                                         {item.product.name}
+                                                     </Link>
+                                                     {item.size && <div className="cart-item-size">Size: <strong>{item.size}</strong></div>}
+                                                     <button 
+                                                         onClick={() => handleRemoveClick(item.product._id, item.size)}
+                                                         className="cart-remove-btn"
+                                                     >
+                                                         <i className="fa-regular fa-trash-can"></i> Remove
+                                                     </button>
+                                                 </div>
+                                             </div>
+                                         </td>
+                                         <td className="cart-td" data-label="Price" style={{ fontWeight: '600' }}>
+                                             Rs. {activePrice.toLocaleString()}
+                                         </td>
+                                         <td className="cart-td" data-label="Quantity">
+                                             <div className="qty-controls" style={{ margin: '0 auto', width: 'fit-content' }}>
+                                                 <button 
+                                                     onClick={() => handleQtyChange(item.product._id, item.quantity, false, item.size)}
+                                                     className="qty-btn"
+                                                 >
+                                                     -
+                                                 </button>
+                                                 <div className="qty-display">{item.quantity}</div>
+                                                 <button 
+                                                     onClick={() => handleQtyChange(item.product._id, item.quantity, true, item.size)}
+                                                     className="qty-btn"
+                                                 >
+                                                     +
+                                                 </button>
+                                             </div>
+                                         </td>
+                                         <td className="cart-td" data-label="Total" style={{ textAlign: 'right', fontWeight: '700', color: 'var(--brand-orange)' }}>
+                                             Rs. {itemTotal.toLocaleString()}
+                                         </td>
+                                     </tr>
                                 );
                             })}
                         </tbody>

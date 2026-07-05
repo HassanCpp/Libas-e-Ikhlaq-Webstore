@@ -112,28 +112,28 @@ const OrderDetail = () => {
                             </tr>
                         </thead>
                         <tbody>
-                            {order.items.map((item, idx) => (
-                                <tr key={idx} className="cart-tr">
-                                    <td className="cart-td" style={{ padding: '12px 10px' }}>
-                                        <span style={{ fontWeight: '600' }}>{item.name}</span>
-                                        {item.size && <span style={{ fontSize: '11px', color: '#777', display: 'block' }}>Size: {item.size}</span>}
-                                    </td>
-                                    <td className="cart-td" style={{ textAlign: 'center', padding: '12px 10px' }}>
-                                        {item.quantity}
-                                    </td>
-                                    <td className="cart-td" style={{ textAlign: 'right', padding: '12px 10px' }}>
-                                        Rs. {item.price.toLocaleString()}
-                                    </td>
-                                    <td className="cart-td" style={{ textAlign: 'right', fontWeight: '700', padding: '12px 10px' }}>
-                                        Rs. {(item.price * item.quantity).toLocaleString()}
-                                    </td>
-                                </tr>
-                            ))}
+                             {order.items.map((item, idx) => (
+                                 <tr key={idx} className="cart-tr">
+                                     <td className="cart-td" data-label="Item" style={{ padding: '12px 10px' }}>
+                                         <span style={{ fontWeight: '600' }}>{item.name}</span>
+                                         {item.size && <span style={{ fontSize: '11px', color: '#777', display: 'block' }}>Size: {item.size}</span>}
+                                     </td>
+                                     <td className="cart-td" data-label="Quantity" style={{ textAlign: 'center', padding: '12px 10px' }}>
+                                         {item.quantity}
+                                     </td>
+                                     <td className="cart-td" data-label="Price" style={{ textAlign: 'right', padding: '12px 10px' }}>
+                                         Rs. {item.price.toLocaleString()}
+                                     </td>
+                                     <td className="cart-td" data-label="Total" style={{ textAlign: 'right', fontWeight: '700', padding: '12px 10px' }}>
+                                         Rs. {(item.price * item.quantity).toLocaleString()}
+                                     </td>
+                                 </tr>
+                             ))}
                         </tbody>
                     </table>
                 </div>
 
-                <div style={{ float: 'right', width: '300px', borderTop: '2px solid #222', paddingTop: '15px' }}>
+                <div className="order-summary-block">
                     {order.couponCode && (
                         <div className="summary-row" style={{ color: 'var(--brand-orange)' }}>
                             <span>Discount Coupon ({order.couponCode}):</span>

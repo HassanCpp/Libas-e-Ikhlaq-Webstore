@@ -151,7 +151,7 @@ const Checkout = () => {
                             />
                         </div>
 
-                        <div style={{ display: 'flex', gap: '20px' }}>
+                        <div className="form-row-two-col">
                             <div className="form-group" style={{ flexGrow: 1 }}>
                                 <label className="form-label">City</label>
                                 <input
@@ -192,7 +192,7 @@ const Checkout = () => {
                             Payment Method
                         </h3>
 
-                        <div style={{ display: 'flex', gap: '20px', marginBottom: '25px' }}>
+                        <div className="checkout-payment-row">
                             <label style={{ display: 'flex', alignItems: 'center', gap: '8px', cursor: 'pointer', fontSize: '14px', fontWeight: '600' }}>
                                 <input
                                     type="radio"
