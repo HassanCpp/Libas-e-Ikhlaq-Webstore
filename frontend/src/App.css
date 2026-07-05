@@ -2510,6 +2510,10 @@ a {
 }
 
 @media (max-width: 768px) {
+    .new-header-container {
+        position: static !important;
+    }
+
     /* 1. Header Navigation Menu */
     .header-top-row {
         display: flex;
