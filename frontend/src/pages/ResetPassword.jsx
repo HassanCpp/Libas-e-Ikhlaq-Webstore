@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useParams, useNavigate, Link } from 'react-router-dom';
-import { api } from '../utils/api';
+import { api, getImageUrl } from '../utils/api';
 import Alert from '../components/Alert';
 
 const ResetPassword = () => {
@@ -44,7 +44,7 @@ const ResetPassword = () => {
             {/* LEFT COLUMN: BRANDED VISUAL */}
             <div 
                 className="auth-image-column"
-                style={{ backgroundImage: "url('/wool-blended.png')" }}
+                style={{ backgroundImage: `url('${getImageUrl('/wool-blended.png')}')` }}
             >
                 <div className="auth-image-overlay"></div>
                 <div className="auth-image-content">

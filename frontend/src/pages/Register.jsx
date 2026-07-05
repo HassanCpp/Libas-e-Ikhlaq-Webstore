@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
-import { api } from '../utils/api';
+import { api, getImageUrl } from '../utils/api';
 import Alert from '../components/Alert';
 
 const Register = () => {
@@ -114,7 +114,7 @@ const Register = () => {
             {/* RIGHT COLUMN: BRANDED TEXT OVER MODEL BACKGROUND */}
             <div 
                 className="auth-image-column"
-                style={{ backgroundImage: "url('/maroonkurta.png')" }}
+                style={{ backgroundImage: `url('${getImageUrl('/maroonkurta.png')}')` }}
             >
                 <div className="auth-image-overlay"></div>
                 <div className="auth-image-content">

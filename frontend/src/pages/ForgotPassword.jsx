@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { api } from '../utils/api';
+import { api, getImageUrl } from '../utils/api';
 import Alert from '../components/Alert';
 
 const ForgotPassword = () => {
@@ -37,7 +37,7 @@ const ForgotPassword = () => {
             {/* LEFT COLUMN: BRANDED VISUAL */}
             <div 
                 className="auth-image-column"
-                style={{ backgroundImage: "url('/wool-blended.png')" }}
+                style={{ backgroundImage: `url('${getImageUrl('/wool-blended.png')}')` }}
             >
                 <div className="auth-image-overlay"></div>
                 <div className="auth-image-content">

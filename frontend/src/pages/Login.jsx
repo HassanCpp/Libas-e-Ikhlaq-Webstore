@@ -1,6 +1,7 @@
 import React, { useState, useContext } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { AuthContext } from '../context/AuthContext';
+import { api, getImageUrl } from '../utils/api';
 import Alert from '../components/Alert';
 
 const Login = () => {
@@ -47,7 +48,7 @@ const Login = () => {
             {/* LEFT COLUMN: BRANDED TEXT OVER FABRIC BACKGROUND */}
             <div 
                 className="auth-image-column"
-                style={{ backgroundImage: "url('/wool-blended.png')" }}
+                style={{ backgroundImage: `url('${getImageUrl('/wool-blended.png')}')` }}
             >
                 <div className="auth-image-overlay"></div>
                 <div className="auth-image-content">
