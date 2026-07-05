@@ -19,7 +19,8 @@ app.use(cors()); // Enable Cross-Origin Resource Sharing globally including stat
 // ==========================================
 // Protect headers but allow Google Fonts and Bootstrap/FontAwesome CDNs
 app.use(helmet({
-    contentSecurityPolicy: false
+    contentSecurityPolicy: false,
+    crossOriginResourcePolicy: { policy: "cross-origin" }
 }));
 
 // Prevent NoSQL Injection attacks by cleaning incoming data keys
