@@ -1,0 +1,274 @@
+import React, { useState, useEffect } from 'react';
+import { useNavigate, useParams, Link } from 'react-router-dom';
+import { api } from '../utils/api';
+import AdminHeader from '../components/AdminHeader';
+import Alert from '../components/Alert';
+
+const AdminEditProduct = () => {
+    const { id } = useParams();
+    const navigate = useNavigate();
+
+    // Form inputs state
+    const [name, setName] = useState('');
+    const [price, setPrice] = useState('');
+    const [discountPrice, setDiscountPrice] = useState('');
+    const [category, setCategory] = useState('unstitched');
+    const [stock, setStock] = useState('10');
+    const [description, setDescription] = useState('');
+    const [imageFile, setImageFile] = useState(null);
+    const [existingImage, setExistingImage] = useState('');
+
+    // Sizing stock state
+    const [sizes, setSizes] = useState({ XS: 0, S: 0, M: 0, L: 0, XL: 0 });
+
+    // Alerts State
+    const [alertMessage, setAlertMessage] = useState('');
+    const [alertType, setAlertType] = useState('success');
+    const [submitting, setSubmitting] = useState(false);
+    const [loading, setLoading] = useState(true);
+
+    const triggerAlert = (type, message) => {
+        setAlertType(type);
+        setAlertMessage(message);
+    };
+
+    useEffect(() => {
+        const fetchProduct = async () => {
+            try {
+                const res = await api.get(`/products/${id}`);
+                if (res.success) {
+                    const p = res.data;
+                    setName(p.name);
+                    setPrice(p.price.toString());
+                    setDiscountPrice(p.discountPrice ? p.discountPrice.toString() : '');
+                    setCategory(p.category);
+                    setStock(p.stock.toString());
+                    setDescription(p.description || '');
+                    setExistingImage(p.image);
+                    
+                    if (p.sizes) {
+                        setSizes({
+                            XS: p.sizes.XS || 0,
+                            S: p.sizes.S || 0,
+                            M: p.sizes.M || 0,
+                            L: p.sizes.L || 0,
+                            XL: p.sizes.XL || 0
+                        });
+                    }
+                }
+            } catch (err) {
+                console.error(err);
+                triggerAlert('error', 'Failed to retrieve product details.');
+            } finally {
+                setLoading(false);
+            }
+        };
+        fetchProduct();
+    }, [id]);
+
+    const isClothing = category === 'kurta-pajama' || category === 'waistcoats';
+
+    const handleSizeChange = (sizeName, value) => {
+        const val = parseInt(value) || 0;
+        setSizes(prev => ({ ...prev, [sizeName]: val }));
+    };
+
+    const handleFormSubmit = async (e) => {
+        e.preventDefault();
+        
+        if (!name.trim() || !price || !category) {
+            triggerAlert('error', 'Product name, price and category are required.');
+            return;
+        }
+
+        setSubmitting(true);
+        try {
+            const formData = new FormData();
+            formData.append('name', name.trim());
+            formData.append('price', price);
+            formData.append('discountPrice', discountPrice);
+            formData.append('category', category);
+            formData.append('description', description.trim());
+            
+            if (imageFile) {
+                formData.append('image', imageFile);
+            }
+
+            if (isClothing) {
+                formData.append('sizes', JSON.stringify(sizes));
+                // Stock is dynamically calculated from size totals
+                const totalStock = Object.values(sizes).reduce((a, b) => a + b, 0);
+                formData.append('stock', totalStock.toString());
+            } else {
+                formData.append('stock', stock);
+            }
+
+            const res = await api.put(`/admin/products/${id}`, formData);
+            if (res.success) {
+                navigate('/admin');
+            }
+        } catch (err) {
+            triggerAlert('error', err.message || 'Failed to update product.');
+        } finally {
+            setSubmitting(false);
+        }
+    };
+
+    return (
+        <div className="admin-layout">
+            <AdminHeader />
+            
+            <main className="admin-main-panel">
+                <Alert type={alertType} message={alertMessage} onClose={() => setAlertMessage('')} />
+                
+                <div className="admin-panel-header">
+                    <h2 style={{ fontSize: '32px', fontWeight: '300', textTransform: 'none', letterSpacing: '0' }}>Edit Product</h2>
+                    <Link to="/admin" className="btn-dark" style={{ padding: '10px 20px', fontSize: '13px' }}>
+                        &larr; Back
+                    </Link>
+                </div>
+
+                {loading ? (
+                    <div style={{ textAlign: 'center', padding: '50px' }}>Loading product details...</div>
+                ) : (
+                    <div className="reviews-grid">
+                        <div className="reviews-list-col" style={{ width: '65%' }}>
+                            <div className="reviews-form-col" style={{ width: '100%' }}>
+                                <form onSubmit={handleFormSubmit}>
+                                    <div className="form-group">
+                                        <label className="form-label">Product Name</label>
+                                        <input
+                                            type="text"
+                                            value={name}
+                                            onChange={(e) => setName(e.target.value)}
+                                            className="form-input"
+                                            required
+                                        />
+                                    </div>
+
+                                    <div style={{ display: 'flex', gap: '20px' }}>
+                                        <div className="form-group" style={{ flexGrow: 1 }}>
+                                            <label className="form-label">Retail Price (PKR)</label>
+                                            <input
+                                                type="number"
+                                                value={price}
+                                                onChange={(e) => setPrice(e.target.value)}
+                                                className="form-input"
+                                                required
+                                            />
+                                        </div>
+                                        <div className="form-group" style={{ flexGrow: 1 }}>
+                                            <label className="form-label">Discount Price (Optional)</label>
+                                            <input
+                                                type="number"
+                                                value={discountPrice}
+                                                onChange={(e) => setDiscountPrice(e.target.value)}
+                                                className="form-input"
+                                            />
+                                        </div>
+                                    </div>
+
+                                    <div style={{ display: 'flex', gap: '20px' }}>
+                                        <div className="form-group" style={{ flexGrow: 1 }}>
+                                            <label className="form-label">Category</label>
+                                            <select 
+                                                value={category} 
+                                                onChange={(e) => setCategory(e.target.value)} 
+                                                className="sort-dropdown"
+                                                style={{ width: '100%', padding: '12px' }}
+                                            >
+                                                <option value="unstitched">Unstitched Fabric</option>
+                                                <option value="kurta-pajama">Kurta Pajama</option>
+                                                <option value="waistcoats">Waistcoats</option>
+                                                <option value="fragrance">Fragrance</option>
+                                                <option value="accessories">Accessories</option>
+                                            </select>
+                                        </div>
+
+                                        {!isClothing && (
+                                            <div className="form-group" style={{ flexGrow: 1 }}>
+                                                <label className="form-label">Stock Quantity</label>
+                                                <input
+                                                    type="number"
+                                                    value={stock}
+                                                    onChange={(e) => setStock(e.target.value)}
+                                                    className="form-input"
+                                                    required
+                                                />
+                                            </div>
+                                        )}
+                                    </div>
+
+                                    {isClothing && (
+                                        <div className="address-box" style={{ background: '#f9f9f9', marginBottom: '20px', border: '1px dashed var(--brand-orange)' }}>
+                                            <h4 style={{ margin: 0, marginBottom: '15px' }}>Clothing Sizes Stock Allocation</h4>
+                                            <div style={{ display: 'flex', gap: '15px' }}>
+                                                {['XS', 'S', 'M', 'L', 'XL'].map((sz) => (
+                                                    <div key={sz} className="form-group" style={{ flexGrow: 1, marginBottom: 0 }}>
+                                                        <label className="form-label" style={{ textAlign: 'center' }}>{sz}</label>
+                                                        <input
+                                                            type="number"
+                                                            value={sizes[sz]}
+                                                            onChange={(e) => handleSizeChange(sz, e.target.value)}
+                                                            className="form-input"
+                                                            style={{ textAlign: 'center', padding: '8px' }}
+                                                            min="0"
+                                                        />
+                                                    </div>
+                                                ))}
+                                            </div>
+                                            <div style={{ marginTop: '15px', fontSize: '13px', fontWeight: '700', color: 'var(--brand-orange)', textAlign: 'right' }}>
+                                                Total Calculated Stock: {Object.values(sizes).reduce((a, b) => a + b, 0)}
+                                            </div>
+                                        </div>
+                                    )}
+
+                                    <div className="form-group">
+                                        <label className="form-label">Description</label>
+                                        <textarea
+                                            value={description}
+                                            onChange={(e) => setDescription(e.target.value)}
+                                            className="review-textarea"
+                                        ></textarea>
+                                    </div>
+
+                                    <div className="form-group" style={{ marginBottom: '30px' }}>
+                                        <label className="form-label">Upload New Product Image (Optional)</label>
+                                        <input
+                                            type="file"
+                                            accept="image/*"
+                                            onChange={(e) => setImageFile(e.target.files[0])}
+                                            style={{ border: 'none', background: 'none', padding: 0 }}
+                                        />
+                                    </div>
+
+                                    <button
+                                        type="submit"
+                                        disabled={submitting}
+                                        className="btn-primary"
+                                        style={{ width: '100%', padding: '15px 0' }}
+                                    >
+                                        {submitting ? 'Saving modifications...' : 'Save Modifications'}
+                                    </button>
+                                </form>
+                            </div>
+                        </div>
+
+                        <div className="reviews-form-col" style={{ width: '35%', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+                            <h4 className="selector-title" style={{ marginBottom: '20px' }}>Active Cover Image</h4>
+                            {existingImage && (
+                                <img 
+                                    src={existingImage} 
+                                    alt="Product Cover" 
+                                    style={{ width: '100%', maxHeight: '350px', objectFit: 'cover', borderRadius: '4px', border: '1px solid #ddd' }} 
+                                />
+                            )}
+                        </div>
+                    </div>
+                )}
+            </main>
+        </div>
+    );
+};
+
+export default AdminEditProduct;
