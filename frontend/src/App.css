@@ -2514,6 +2514,17 @@ a {
         position: static !important;
     }
 
+    .cart-page-container,
+    .checkout-page-container,
+    .order-detail-container {
+        padding: 30px 15px !important;
+    }
+    
+    .cart-layout,
+    .checkout-layout {
+        padding: 0 !important;
+    }
+
     /* 1. Header Navigation Menu */
     .header-top-row {
         display: flex;
