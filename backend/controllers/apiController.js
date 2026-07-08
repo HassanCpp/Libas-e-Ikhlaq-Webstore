@@ -1081,6 +1081,7 @@ const getAdminAnalytics = async (req, res) => {
     try {
         const orders = await Order.find();
         const products = await Product.find();
+        const totalUsers = await User.countDocuments();
 
         let totalRevenue = 0;
         let totalOrders = orders.length;
@@ -1157,9 +1158,11 @@ const getAdminAnalytics = async (req, res) => {
             data: {
                 totalRevenue,
                 totalOrders,
+                totalUsers,
                 pendingDeliveries,
                 averageOrderValue,
                 lowStockProducts,
+                lowStockCount: lowStockProducts.length,
                 topProducts,
                 salesTrend
             }
