@@ -157,7 +157,7 @@ const Header = () => {
                         {/* Wishlist Heart */}
                         <Link to="/wishlist" className="header-action-icon-link" title="Wishlist">
                             <i className="fa-regular fa-heart"></i>
-                            {wishlistItems.length > 0 && <span className="header-action-badge">{wishlistItems.length}</span>}
+                            {wishlistItems.length > 0 && <span className="header-action-badge header-badge-orange">{wishlistItems.length}</span>}
                         </Link>
 
                         {/* If Admin, show Shield icon */}
