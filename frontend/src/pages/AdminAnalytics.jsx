@@ -68,13 +68,23 @@ const AdminAnalytics = () => {
     }
 
     // Chart Data config
-    const monthlyRev = analytics.monthlyRevenue || [];
+    const salesTrend = analytics.salesTrend || [];
     const chartData = {
-        labels: monthlyRev.map(m => m.month),
+        labels: salesTrend.map(s => {
+            // Format "YYYY-MM-DD" to a nicer date format, e.g., "MMM DD"
+            try {
+                const parts = s.date.split('-');
+                if (parts.length === 3) {
+                    const dateObj = new Date(parts[0], parts[1] - 1, parts[2]);
+                    return dateObj.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+                }
+            } catch (e) {}
+            return s.date;
+        }),
         datasets: [
             {
                 label: 'Sales Revenue (PKR)',
-                data: monthlyRev.map(m => m.revenue),
+                data: salesTrend.map(s => s.amount),
                 borderColor: '#E85624',
                 backgroundColor: 'rgba(232, 86, 36, 0.1)',
                 tension: 0.3,
