@@ -1097,7 +1097,7 @@ const getAdminAnalytics = async (req, res) => {
         }
 
         const averageOrderValue = totalOrders > 0 ? (totalRevenue / totalOrders) : 0;
-        const lowStockProducts = products.filter(p => p.stock <= 5);
+        const lowStockProducts = products.filter(p => p.stock <= 10);
 
         const productSales = {};
         for (let order of orders) {
