@@ -227,7 +227,7 @@ const Home = () => {
             <section className="products-section" style={{ backgroundColor: '#fcfcfc', borderTop: '1px solid #f0f0f0', borderBottom: '1px solid #f0f0f0' }}>
                 <h2 className="section-title">SPECIAL OFFERS</h2>
                 {loading ? (
-                    <div style={{ textAlign: 'center', padding: '50px' }}>Loading offers...</div>
+                    <SkeletonLoader count={4} />
                 ) : (
                     <div className="product-grid">
                         {specialOffers.map((product) => {

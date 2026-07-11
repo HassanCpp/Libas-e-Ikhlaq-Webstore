@@ -4,6 +4,7 @@ import { api, getImageUrl } from '../utils/api';
 import { CartContext } from '../context/CartContext';
 import { AuthContext } from '../context/AuthContext';
 import Alert from '../components/Alert';
+import ProductDetailSkeleton from '../components/ProductDetailSkeleton';
 
 const ProductDetail = () => {
     const { id } = useParams();
@@ -85,7 +86,7 @@ const ProductDetail = () => {
     }, [id]);
 
     if (loading) {
-        return <div style={{ textAlign: 'center', padding: '100px' }}>Loading product details...</div>;
+        return <ProductDetailSkeleton />;
     }
 
     if (!product) {
