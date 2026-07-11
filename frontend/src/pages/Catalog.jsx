@@ -3,6 +3,7 @@ import { useLocation, useNavigate, Link } from 'react-router-dom';
 import { api, getImageUrl } from '../utils/api';
 import { CartContext } from '../context/CartContext';
 import Alert from '../components/Alert';
+import SkeletonLoader from '../components/SkeletonLoader';
 
 const Catalog = () => {
     const location = useLocation();
@@ -227,7 +228,7 @@ const Catalog = () => {
                 </div>
 
                 {loading ? (
-                    <div style={{ textAlign: 'center', padding: '100px' }}>Loading products...</div>
+                    <SkeletonLoader count={8} />
                 ) : products.length === 0 ? (
                     <div style={{ textAlign: 'center', padding: '100px', fontSize: '18px', color: '#777' }}>
                         No products found matching your criteria.

@@ -3,6 +3,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { api, getImageUrl } from '../utils/api';
 import { CartContext } from '../context/CartContext';
 import Alert from '../components/Alert';
+import SkeletonLoader from '../components/SkeletonLoader';
 
 const Home = () => {
     const { addToCart } = useContext(CartContext);
@@ -154,7 +155,7 @@ const Home = () => {
             <section className="products-section">
                 <h2 className="section-title">NEW ARRIVALS</h2>
                 {loading ? (
-                    <div style={{ textAlign: 'center', padding: '50px' }}>Loading products...</div>
+                    <SkeletonLoader count={4} />
                 ) : (
                     <div className="product-grid">
                         {products.map((product) => {

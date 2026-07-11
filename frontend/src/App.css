@@ -3074,3 +3074,70 @@ a {
         font-size: 28px;
     }
 }
+
+/* Shimmer / Skeleton Loader Animations */
+@keyframes skeleton-shimmer {
+    0% {
+        background-position: -200px 0;
+    }
+    100% {
+        background-position: 200px 0;
+    }
+}
+
+.skeleton-shimmer {
+    background: linear-gradient(90deg, #f2f2f2 25%, #e6e6e6 50%, #f2f2f2 75%);
+    background-size: 400px 100%;
+    animation: skeleton-shimmer 1.5s infinite linear;
+}
+
+.skeleton-card {
+    background: #ffffff;
+    border: 1px solid #eeeeee;
+    border-radius: 8px;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.01);
+}
+
+.skeleton-image {
+    aspect-ratio: 3/4;
+    width: 100%;
+}
+
+.skeleton-info {
+    padding: 15px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.skeleton-line {
+    height: 12px;
+    border-radius: 4px;
+    width: 100%;
+}
+
+.skeleton-line.category {
+    width: 45%;
+    height: 10px;
+}
+
+.skeleton-line.title {
+    width: 85%;
+    height: 16px;
+    margin-top: 4px;
+}
+
+.skeleton-line.rating {
+    width: 35%;
+    height: 10px;
+}
+
+.skeleton-line.price {
+    width: 55%;
+    height: 14px;
+    margin-top: 6px;
+}
